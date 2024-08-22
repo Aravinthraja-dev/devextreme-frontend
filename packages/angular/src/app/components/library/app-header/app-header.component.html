@@ -1,0 +1,147 @@
+<header>
+  <dx-toolbar class="header-toolbar">
+    <dxi-item
+      *ngIf="menuToggleEnabled"
+      location="before"
+      widget="dxButton"
+      cssClass="menu-button"
+      [options]="{
+        icon: 'menu',
+        stylingMode: 'text',
+        onClick: toggleMenu
+      }"
+    >
+    </dxi-item>
+    <dxi-item
+      location="before"
+      cssClass="header-title"
+      *ngIf="title"
+      [text]="title"
+    >
+    </dxi-item>
+
+    <dxi-item
+      location="after"
+      widget="dxTextBox"
+      locateInMenu="auto"
+      cssClass="global-search-box"
+      [options]="{
+        stylingMode: 'filled',
+        mode: 'search',
+        placeholder: 'Search',
+        width: 180
+      }"
+    >
+    </dxi-item>
+    <dxi-item location="after" locateInMenu="never">
+      <ng-container *dxTemplate>
+        <theme-switcher></theme-switcher>
+      </ng-container>
+    </dxi-item>
+
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <div class="messages">
+          <dx-button
+            icon="preferences"
+            stylingMode="text"
+            (onClick)="showPopupWithScrollView()"
+          >
+          </dx-button>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <div class="messages">
+          <dx-button
+            icon="belloutline"
+            stylingMode="text"
+            (onClick)="showPopupWithScrollView1()"
+          >
+          </dx-button>
+          <div class="dx-badge"> 4 </div>
+        </div>
+      </div>
+    </dxi-item>
+
+    <dxi-item location="after" locateInMenu="auto" menuItemTemplate="menuItem">
+      <div *dxTemplate="let data of 'item'">
+        <user-panel
+          [user]="user"
+          [menuItems]="userMenuItems"
+          menuMode="context"
+        ></user-panel>
+      </div>
+    </dxi-item>
+    <div *dxTemplate="let data of 'menuItem'">
+      <user-panel
+        [user]="user"
+        [menuItems]="userMenuItems"
+        menuMode="list"
+      ></user-panel>
+    </div>
+  </dx-toolbar>
+
+  <dx-popup
+    [height]="550"
+    [hideOnOutsideClick]="true"
+    [showCloseButton]="true"
+    [(visible)]="popupWithScrollViewVisible"
+    title="Downtown Inn"
+    >
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
+      <div class="caption">Description</div>
+      In the heart of LA's business district, the Downtown Inn has a welcoming
+      staff and award winning restaurants that remain open 24 hours a day. Use
+      our conference room facilities to conduct meetings and have a drink at our
+      beautiful rooftop bar.
+      <br /><br />
+      <div class="content">
+        <div>
+          <div class="caption">Features</div>
+          <div>Concierge</div>
+          <div>Restaurant</div>
+          <div>Valet Parking</div>
+          <div>Fitness Center</div>
+          <div>Sauna</div>
+          <div>Airport Shuttle</div>
+        </div>
+        <div>
+          <div class="caption">Rooms</div>
+          <div>Climate control</div>
+          <div>Air conditioning</div>
+          <div>Coffee/tea maker</div>
+          <div>Iron/ironing</div>
+        </div>
+      </div>
+    </dx-scroll-view>
+  </div>
+    <dxi-toolbar-item
+      widget="dxButton"
+      toolbar="bottom"
+      location="center"
+      [options]="bookButtonOptions"
+      >
+    </dxi-toolbar-item>
+  </dx-popup>
+
+  <dx-popup
+    class="notification-popup"
+    [width]="340"
+    [height]="440"
+    [hideOnOutsideClick]="true"
+    [showCloseButton]="true"
+    [(visible)]="popupVisible"
+    position="right"
+    title="Notification"
+    >
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view width="100%" height="100%">
+        
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+</header>

@@ -1,0 +1,132 @@
+<app-header-highlighter 
+  *ngIf="isHeaderVisible"
+  [highlightedContent]="topContent" 
+  (close)="onHeaderClose()"
+  >
+</app-header-highlighter>
+<app-header
+  class="layout-header"
+  [menuToggleEnabled]="true"
+  (menuToggle)="menuOpened = !menuOpened"
+  [title]="appInfo.title"
+></app-header>
+
+<dx-drawer
+  class="layout-body"
+  position="before"
+  [closeOnOutsideClick]="shaderEnabled"
+  [openedStateMode]="menuMode"
+  [revealMode]="menuRevealMode"
+  [minSize]="minMenuSize"
+  [maxSize]="250"
+  [shading]="shaderEnabled"
+  [(opened)]="menuOpened"
+>
+  <side-navigation-menu
+    [compactMode]="!menuOpened"
+    class="dx-swatch-additional"
+    *dxTemplate="let dataMenu of 'panel'"
+    (selectedItemChanged)="navigationChanged($event)"
+    (openMenu)="navigationClick()"
+  >
+    <app-footer
+      >Copyright © {{ appInfo.currentYear }} <br />
+      Developer Express Inc.</app-footer
+    >
+  </side-navigation-menu>
+
+  <div class="content">
+    <dx-toolbar class="toolbar-details theme-dependent" *ngIf="isTabVisible">
+      <dxi-item location="after" locateInMenu="auto">
+        <dx-button
+          text="Close All"
+          type="default"
+          stylingMode="contained"
+          (onClick)="closeAllTab()"
+        ></dx-button>
+      </dxi-item>
+      <dxi-item location="after">
+        <dx-drop-down-button
+          text="Tab Opened"
+          [dropDownOptions]="{ width: 'auto' }"
+          (onItemClick)="onItemClick($event)"
+          [items]="downloads"
+          >
+        </dx-drop-down-button>
+      </dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+    </dx-toolbar>
+    
+    <dx-sortable
+      filter=".dx-tab"
+      [data]="menuItems"
+      itemOrientation="horizontal"
+      dragDirection="horizontal"
+      (onDragStart)="onTabDragStart($event)"
+      (onReorder)="onTabDrop($event)"
+      >
+    <dx-tab-panel
+      [dataSource]="menuItems"
+      [height]="600"
+      itemTitleTemplate="title"
+      itemTemplate="item"
+      [deferRendering]="false"
+      [showNavButtons]="true"
+      [repaintChangesOnly]="true"
+      [selectedIndex]="selectedIndex"
+      >
+      <div *dxTemplate="let content of 'title'">
+        <span (click)="onTabTitleClick(content)">{{ content.FirstName }}</span
+        ><i
+          *ngIf="showCloseButton()"
+          class="dx-icon dx-icon-close"
+          (click)="closeButtonHandler(content)"
+        ></i>
+      </div>
+      <div *dxTemplate="let tabMenu of 'item'">
+        <!-- <div class="menuInfo">
+          <ng-container *ngIf="tabMenu.vocherID === 1">
+            <crm-contact-list></crm-contact-list>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 2">
+            <crm-contact-details></crm-contact-details>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 3">
+            <planning-task-list></planning-task-list>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 4">
+            <planning-task-details></planning-task-details>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 5">
+            <planning-scheduler></planning-scheduler>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 6">
+            <app-analytics-dashboard></app-analytics-dashboard>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 7">
+            <analytics-sales-report></analytics-sales-report>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 8">
+            <analytics-geography></analytics-geography>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 9">
+            <reset-password-form></reset-password-form>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 10">
+            <app-sign-in-form></app-sign-in-form>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 11">
+            <app-sign-up-form></app-sign-up-form>
+          </ng-container>
+          <ng-container *ngIf="tabMenu.vocherID === 12">
+            <user-profile></user-profile>
+          </ng-container>
+        </div>--> 
+        <router-outlet></router-outlet>
+      </div>
+    </dx-tab-panel>
+    </dx-sortable> 
+  </div>
+</dx-drawer>
