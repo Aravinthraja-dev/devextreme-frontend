@@ -35,7 +35,6 @@ import { AppSignUpComponentModule } from 'src/app/pages/sign-up-form/sign-up-for
 import { UserProfileListModule } from 'src/app/pages/user-profile/user-profile.component';
 import { DxButtonModule, DxDropDownButtonModule, DxTabsModule, DxToolbarModule } from 'devextreme-angular';
 import { DxDropDownButtonTypes } from 'devextreme-angular/ui/drop-down-button';
-import { DxTabsTypes } from 'devextreme-angular/ui/tabs';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -53,7 +52,6 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [];
   selectedIndex: number;
   allMenuItems: MenuItem[] = [];
-  tabDropDown: any = {};
   selectedRoute = '';
   menuOpened!: boolean;
   temporaryMenuOpened = false;
